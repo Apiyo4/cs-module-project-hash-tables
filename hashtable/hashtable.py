@@ -131,6 +131,12 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        i = self.hash_index(key)
+        val = self.storage[i]
+        if val == None:
+            return None
+
+        return val
 
 
     def resize(self, new_capacity):
