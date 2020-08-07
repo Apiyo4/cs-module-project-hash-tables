@@ -90,8 +90,8 @@ class HashTable:
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
-        return self.djb2(key) % self.capacity
+        return self.fnv1(key) % self.capacity
+        # return self.djb2(key) % self.capacity
 
     def put(self, key, value):
         """
@@ -100,9 +100,15 @@ class HashTable:
         Hash collisions should be handled with Linked List Chaining.
 
         Implement this.
-        
+        Put
+        ---
+        1: find index
+        2: search the list at the index for the provided key
+        3: insert the value at the index
         """
         # Your code here
+        i = self.hash_index(key)
+        self.storage[i] =  value
 
 
     def delete(self, key):
