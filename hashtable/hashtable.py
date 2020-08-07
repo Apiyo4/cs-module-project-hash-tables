@@ -22,6 +22,8 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
+        self.capacity =  capacity
+        self.storage = [None] * capacity
 
 
     def get_num_slots(self):
@@ -54,6 +56,24 @@ class HashTable:
         """
 
         # Your code here
+        """
+        algorithm fnv-1 is
+        hash := FNV_offset_basis do
+
+        for each byte_of_data to be hashed
+        hash := hash × FNV_prime
+        hash := hash XOR byte_of_data
+
+        return hash      
+        """
+        hash = 0xcbf29ce484222325
+
+        fnvprime = 0x100000001b3
+        s = key.encode()
+        for byte in s:
+            hash = (hash * fnvprime)
+            hash = hash ^ byte
+        return hash
 
 
     def djb2(self, key):
@@ -63,15 +83,15 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
-
+        
 
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
-        return self.djb2(key) % self.capacity
+        return self.fnv1(key) % self.capacity
+        # return self.djb2(key) % self.capacity
 
     def put(self, key, value):
         """
@@ -80,8 +100,15 @@ class HashTable:
         Hash collisions should be handled with Linked List Chaining.
 
         Implement this.
+        Put
+        ---
+        1: find index
+        2: search the list at the index for the provided key
+        3: insert the value at the index
         """
         # Your code here
+        i = self.hash_index(key)
+        self.storage[i] =  value
 
 
     def delete(self, key):
@@ -93,7 +120,12 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        i = self.hash_index(key)
+        if self.storage[i] != None:
+            print("Key not found")
+        else:
+            self.storage[i] = None
+            self.capacity -= 1
 
     def get(self, key):
         """
@@ -104,6 +136,12 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        i = self.hash_index(key)
+        val = self.storage[i]
+        if val == None:
+            return None
+
+        return val
 
 
     def resize(self, new_capacity):
@@ -134,20 +172,23 @@ if __name__ == "__main__":
     ht.put("line_12", "And stood awhile in thought.")
 
     print("")
+    print(ht.storage)
+    print(ht.delete("line_24"))
+    # print(ht.storage)
 
     # Test storing beyond capacity
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+    # for i in range(1, 13):
+    #     print(ht.get(f"line_{i}"))
 
     # Test resizing
-    old_capacity = ht.get_num_slots()
-    ht.resize(ht.capacity * 2)
-    new_capacity = ht.get_num_slots()
+    # old_capacity = ht.get_num_slots()
+    # ht.resize(ht.capacity * 2)
+    # new_capacity = ht.get_num_slots()
 
-    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    # print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
     # Test if data intact after resizing
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+    # for i in range(1, 13):
+    #     print(ht.get(f"line_{i}"))
 
-    print("")
+    # print("")
