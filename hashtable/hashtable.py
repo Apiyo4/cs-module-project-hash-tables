@@ -22,6 +22,7 @@ class HashTable:
 
     def __init__(self, capacity):
         # Your code here
+        self.capacity =  capacity
         self.storage = [None] * capacity
 
 
@@ -55,6 +56,24 @@ class HashTable:
         """
 
         # Your code here
+        """
+        algorithm fnv-1 is
+        hash := FNV_offset_basis do
+
+        for each byte_of_data to be hashed
+        hash := hash × FNV_prime
+        hash := hash XOR byte_of_data
+
+        return hash      
+        """
+        hash = 0xcbf29ce484222325
+
+        fnvprime = 0x100000001b3
+        s = key.encode()
+        for byte in s:
+            hash = (hash * fnvprime)
+            hash = hash ^ byte
+        return hash
 
 
     def djb2(self, key):
@@ -64,7 +83,7 @@ class HashTable:
         Implement this, and/or FNV-1.
         """
         # Your code here
-
+        
 
     def hash_index(self, key):
         """
@@ -81,6 +100,7 @@ class HashTable:
         Hash collisions should be handled with Linked List Chaining.
 
         Implement this.
+        
         """
         # Your code here
 
