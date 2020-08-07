@@ -120,7 +120,12 @@ class HashTable:
         Implement this.
         """
         # Your code here
-
+        i = self.hash_index(key)
+        if self.storage[i] != None:
+            print("Key not found")
+        else:
+            self.storage[i] = None
+            self.capacity -= 1
 
     def get(self, key):
         """
@@ -167,20 +172,23 @@ if __name__ == "__main__":
     ht.put("line_12", "And stood awhile in thought.")
 
     print("")
+    print(ht.storage)
+    print(ht.delete("line_24"))
+    # print(ht.storage)
 
     # Test storing beyond capacity
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+    # for i in range(1, 13):
+    #     print(ht.get(f"line_{i}"))
 
     # Test resizing
-    old_capacity = ht.get_num_slots()
-    ht.resize(ht.capacity * 2)
-    new_capacity = ht.get_num_slots()
+    # old_capacity = ht.get_num_slots()
+    # ht.resize(ht.capacity * 2)
+    # new_capacity = ht.get_num_slots()
 
-    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    # print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
     # Test if data intact after resizing
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+    # for i in range(1, 13):
+    #     print(ht.get(f"line_{i}"))
 
-    print("")
+    # print("")
